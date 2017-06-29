@@ -4,6 +4,8 @@
   "description": "- react react-router4 redux react-redux",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --port 3002 --open --progress --colors",
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +22,7 @@
   "dependencies": {
     "express": "^4.15.3",
     "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.1",
