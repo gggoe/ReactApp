@@ -129,6 +129,158 @@ render(
 
 ```
 
+# 配置路由
+
+## 目录结构
+- components 组件 木偶组件
+
+- containers 页面组件 或者自己的subpage目录下
+    - Home
+        - subpage 智能组件
+        - index.js
+
+- index.js 用来控制显示哪一个页面
+
+在app 目录下创建containers 和components 文件夹
+
+在containers 目录下创建Home 文件夹 和index.js 文件
+
+在Home 目录下创建index.js 文件
+
+在Home 目录下创建subpage 文件夹
+
+在containers 目录下的index.js 中
+```
+import React, {Component} from 'react';
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                App
+            </div>
+        )
+    }
+}
+```
+
+在app 目录下的index.js 中
+```
+# 导入containers 目录中的App组件
+import App from './containers/index'
+
+render(
+    <App/>,
+    document.getElementById('root')
+);
+```
+
+在http://localhost:3002 中查看组件是否导出
+```
+# 在页面查看效果
+npm start
+```
+
+在app 目录下创建routes 文件夹
+
+在routes 目录下创建index.js 文件
+```
+import React, {Component} from 'react';
+// 路由的两种类型 hashRouter BrowserRouter
+// 取出HashRouter 并取一个为Router 的别名 取出Route
+import {
+    HashRouter as Router,
+    Route
+} from 'react-router-dom';
+import Home from '../containers/Home';
+
+export default class RouterMap extends Component {
+    render() {
+        return (
+            <div>
+                <Router>
+                    <div>
+                        <Route path="/" component={Home}/>
+                    </div>
+                </Router>
+            </div>
+        )
+    }
+}
+```
+
+在containers 目录下的index.js 中
+```
+# 导入路由规则
+import RouterMap from '../routes/index'
+
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                {/* 如果当路径为/ RouterMap 就会变成Home 组件 */}
+                <RouterMap/>
+            </div>
+        )
+    }
+}
+```
+
+在Home 目录下的index.js 中
+```
+import React, {Component} from 'react';
+
+export default class Home extends Component {
+    render() {
+        return (
+            <div>
+                Home
+            </div>
+        )
+    }
+}
+```
+
+在http://localhost:3002/#/ 中查看组件是否导出
+
+在containers 目录下的index.js 中给组件定义状态
+```
+export default class App extends Component {
+    // state 给组件定义状态
+    constructor() {
+        // 调用super 方法后才有this
+        super();
+        this.state = {
+            // done 加载 false 未完成
+            done: false
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {/* 如果当路径为/ RouterMap 就会变成Home 组件 */}
+                {this.state.done ? <RouterMap/> : <div>正在加载</div>}
+            </div>
+        )
+    }
+
+    // 组件加载完成后执行
+    componentDidMount() {
+        // 加载完成后修改加载状态为true
+        // this.setState(
+        //     {done: true}
+        // );
+        // 测试加载效果
+        setTimeout(() => {
+            this.setState({done: true})
+        }, 3000);
+    }
+}
+```
+
+
+
+
 
 
 
