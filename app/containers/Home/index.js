@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import HomeHeader from '../../components/HomeHeader/index'
 // 引入Slider 组件
 import Slider from '../../components/Slider/index'
+import Ad from './subpage/Ad'
 
 export default class Home extends Component {
     render() {
@@ -10,6 +11,7 @@ export default class Home extends Component {
             <div>
                 <HomeHeader cityName="北京"/>
                 <Slider/>
+                <Ad/>
             </div>
         )
     }

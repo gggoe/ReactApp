@@ -525,5 +525,136 @@ let opts = {
 </ul>
 ```
 
+# 广告组件
+
+在根目录创建一个mock 文件夹 用来存放接口和数据
+
+在mock 目录下创建一个home 文件夹 用来存放主页数据
+
+创建一个server.js 文件 配置接口
+```
+# 导入express 模块
+let express = require('express');
+let app = express();
+# 导入数据
+let ad = require('./home/ad');
+
+// 如果访问这个接口就返回相应的数据
+app.get('/api/ad', (req, res) => {
+    res.send(ad);
+});
+
+app.listen(3000, () => {
+    console.log('监听3000端口')
+});
+```
+
+在mock 目录下的home 文件夹中新建ad.js 和list.js 存放数据
+```
+# 导出数据
+module.exports = [
+    {
+        title: '非常大牌',
+        img: '//gw.alicdn.com/tps/TB1u_5AKVXXXXaGXFXXXXXXXXXX-432-330.jpg_q50.jpg',
+        link: 'https://ju.taobao.com/m/jusp/nv/fcdpwap/mtp.htm?scm=2027.4.1.2&jhsstyle=fcdp&spm=a215s.7406091.specialcard1.1&locate=SpecialCard1-1'
+    }
+    ...
+];
+```
+
+在app 目录下 创建一个fetch文件夹 用来接收数据
+
+在fetch 目录下新建一个index.js 文件
+```
+# 导入whatwg-fetch 和es6-promise插件
+import 'whatwg-fetch';
+import 'es6-promise'
+
+# 导出一个get 方法 形参是接口地址
+# 方法的返回值是一个fetch函数
+export function get(url) {
+    return fetch(url, {
+        Accept: 'application/json'
+    })
+}
+```
+
+在fetch 目录下创建一个home 文件夹用来接收主页的数据
+
+在fetch 目录下的home 文件中创建一个index.js 文件
+```
+# 导入父级目录中的index.js 文件中的get 方法
+import {get} from '../index'
+# 导出一个getAd 方法 返回值是执行get 方法并传入接口地址
+export function getAd() {
+    return get('/api/ad')
+}
+```
+
+在containers 目录下的Home 文件夹中的subpage目录下新建一个Ad.js 组件和index.less 样式表
+
+在Ad.js 文件中
+```
+# 导入getAd 方法 获取数据的方法
+import {getAd} from '../../../fetch/home'
+# 导入样式
+import './index.less'
+
+# 设置初始数据
+constructor() {
+    super();
+    this.state = {
+        data: []
+    }
+}
+# 页面加载前执行 调取getAd方法获取初始数据 并保存到this.state
+componentDidMount() {
+    getAd().then(res => res.json().then(data => {
+        console.log(data);
+        this.setState({
+            data
+        })
+    }))
+}
+
+render() {
+    return (
+        <div className="ad">
+            <h4 className="font">超实惠</h4>
+            {this.state.data.length ?
+                # 如果有数据
+                # 循环获取的数据 有多少条数据创建多少个a标签
+                # item 每条数据 index每条数据的索引
+                this.state.data.map((item, index) => (
+                    <a href={item.link} key={index}>
+                        <img src={item.img} title={item.title}/>
+                    </a>
+                )) :
+                # 没有数据
+                <div>正在加载</div>
+            }
+        </div>
+    )
+}
+```
+
+在containers 目录下的Home 文件夹中的index.js 中
+```
+# 导入Ad 组件
+import Ad from './subpage/Ad'
+
+return (
+    <div>
+        <HomeHeader cityName="北京"/>
+        <Slider/>
+        <Ad/>
+    </div>
+)
+```
+
+
+
+
+
 
 
