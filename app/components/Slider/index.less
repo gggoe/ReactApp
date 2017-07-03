@@ -1,0 +1,33 @@
+.carousel {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      width: 20%;
+      line-height: 25px;
+      display: flex;
+      /* 折行 direction 排列方向 column 水平 */
+      flex-direction: column;
+      text-align: center;
+      i {
+        font-size: 20px;
+        color: #e9203d;
+      }
+    }
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  li {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 5px;
+    background: #ccc;
+  }
+  .active {
+    background: #e9203d;
+  }
+}

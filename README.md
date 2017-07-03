@@ -434,9 +434,96 @@ import './assets/index.less'
 import './index.less'
 ```
 
+# 首页轮播
 
+## swiper
+```
+# 下载轮播图插件
+npm install swiper-js-iso react-swipe
+```
 
+在components 目录下新建一个Slider 文件夹用来存放轮播图
 
+在Slider 目录下新建一个index.js 和index.less 文件
+
+在index.js 中 测试轮播图插件
+```
+import React, {Component} from 'react';
+# 导入轮播图插件
+import ReactSwipe from 'react-swipe';
+# 导入less 样式
+import './index.less';
+
+export default class Slider extends Component {
+    render() {
+        return (
+            <div>
+                <ReactSwipe className="carousel" swipeOptions={{continuous: false}}>
+                    <div>PANE 1</div>
+                    <div>PANE 2</div>
+                    <div>PANE 3</div>
+                </ReactSwipe>
+            </div>
+        )
+    }
+}
+```
+
+在Slider 目录下的index.js 文件中
+```
+# 导入组件样式
+import './index.less'
+
+# 搭建轮播图结构
+<div>
+    # swipeOptions 轮播图插件的方法
+    <ReactSwipe className="carousel" swipeOptions={opts}>
+        <div>
+            <ul>
+                <li>
+                    <i className="iconfont icon-coupons"></i>
+                    <span>美食</span>
+                </li>
+                ...
+            </ul>
+        </div>
+        ...
+    </ReactSwipe>
+    <ul className="dots">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+```
+
+给dots 下的li 轮播图小圆点动态添加选中样式
+```
+# 存储当前应该选中的索引
+constructor() {
+    super();
+    this.state = {
+        index: 0
+    }
+}
+
+# 调取插件的方法 用回调函数改变选中的索引
+let opts = {
+    continuous: false,
+    callback: index => {
+        this.setState({
+            index
+        })
+    }
+};
+
+# 如果当前记录的索引等于自身索引则表示选中状态
+<ul className="dots">
+    <li className={this.state.index == 0 ? "active" : ""}></li>
+    <li className={this.state.index == 1 ? "active" : ""}></li>
+    <li className={this.state.index == 2 ? "active" : ""}></li>
+</ul>
+```
 
 
 
