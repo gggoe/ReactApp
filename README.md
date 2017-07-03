@@ -278,19 +278,161 @@ export default class App extends Component {
 }
 ```
 
+# 首页头部
 
+在components 目录下创建一个HomeHeader 文件夹
 
+在HomeHeader 目录下创建一个index.js 文件
+```
+import React, {Component} from 'react';
+// 主页头部组件
+export default class HomeHeader extends Component {
+    render() {
+        return (
+            <div>
+                HomeHeader
+            </div>
+        )
+    }
+}
+```
 
+在Home 目录下的index.js 中
+```
+// 导入HomeHeader 组件
+import HomeHeader from '../../components/HomeHeader/index'
 
+export default class Home extends Component {
+    render() {
+        return (
+            <div>
+                <HomeHeader/>
+            </div>
+        )
+    }
+}
+```
 
+把城市名作为参数传递给子组件
+```
+<HomeHeader cityName="北京"/>
+```
 
+在HomeHeader 目录下的index.js 文件中
+```
+render() {
+    return (
+        <div>
+            {this.props.cityName}
+        </div>
+    )
+}
+```
 
+在index.html 中
+```
+# 导入阿里的在线字体图标库
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_mvsk6fvxnm31sjor.css">
+```
 
+在HomeHeader 目录下的index.js 文件中
+```
+# 搭建头部基本结构
+render() {
+    return (
+        <div>
+            <div>
+                <div>
+                    {this.props.cityName}
+                    <i className="iconfont icon-xiangxia2"></i>
+                </div>
+                <div>
+                    <i className="iconfont icon-sousuo-xianxing"></i>
+                    <input type="text"/>
+                </div>
+                <div>
+                    <i className="iconfont icon-yonghufill"></i>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
 
+在app 目录下创建assets 文件夹存放公共样式
 
+在assets 目录下创建index.less
+```
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Microsoft YaHei UI";
+}
 
+ul li {
+  list-style: none;
+}
 
+a {
+  text-decoration: none;
+}
 
+input {
+  outline: none;
+}
+
+.back {
+  background: #e9203d;
+}
+
+.font {
+  color: #e9203d;
+}
+```
+
+在app 目录下的index.js 中导入
+```
+import './assets/index.less'
+```
+
+在HomeHeader 目录下创建一个index.less 文件存放组件私有样式
+```
+.home-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  .city {
+    flex: 1;
+  }
+  .search {
+    flex: 4;
+    background: #fff;
+    border-radius: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    i {
+      color: #666;
+      flex: 1
+    }
+    input {
+      border: none;
+      flex: 6;
+      margin-right: 10px;
+    }
+  }
+  .profile {
+    flex: 0.5;
+  }
+}
+```
+
+在HomeHeader 目录下的index.js 文件中导入
+```
+import './index.less'
+```
 
 
 
